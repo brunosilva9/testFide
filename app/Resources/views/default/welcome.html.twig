@@ -1,8 +1,72 @@
-{# welcome.html.twig #}
-
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Welcome, {{ app.user.username  }}!</h1>
-    <a href="{{ path('logout') }}">Cerrar sesión</a>
+    
+    <div> 
+        <h1>Welcome, {{ app.user.username }}!</h1>
+        <a class="closeSession" href="{{ path('logout') }}">Cerrar sesión</a>
+    </div>
+
+    <div id="sidebar">
+        <button class="sidebar-button" onclick="mostrarComponente('search')">Buscar mascota</button>
+        <button class="sidebar-button" onclick="mostrarComponente('list')">Lista de mascotas</button>
+        
+        <div id="componente-container">
+            <!-- Aquí se incluye el componente de búsqueda -->
+            <div id="search" style="display: none;">
+                <!-- Contenido del componente de búsqueda -->
+                <h2>Componente de búsqueda</h2>
+                {% include 'search.html.twig' %}
+                <!-- Agrega aquí el código HTML y Twig necesario para el componente de búsqueda -->
+            </div>
+            
+            <!-- Aquí se incluye el componente de lista de mascotas -->
+            <div id="list" style="display: none;">
+                <!-- Contenido del componente de lista de mascotas -->
+                <h2>Componente de lista de mascotas</h2>
+                {% include 'list.html.twig' %}
+                <!-- Agrega aquí el código HTML y Twig necesario para el componente de lista de mascotas -->
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        function mostrarComponente(componente) {
+            var componenteContainer = document.getElementById('componente-container');
+            var componenteSeleccionado = document.getElementById(componente);
+
+            // Ocultar todos los componentes
+            var componentes = componenteContainer.children;
+            for (var i = 0; i < componentes.length; i++) {
+                componentes[i].style.display = 'none';
+            }
+
+            // Mostrar el componente seleccionado
+            componenteSeleccionado.style.display = 'block';
+        }
+    </script>
+{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        .sidebar {
+            width: 200px;
+            background-color: #f2f2f2;
+            padding: 10px;
+        }
+
+        .sidebar-button {
+            display: block;
+            margin-bottom: 5px;
+            text-decoration: none;
+            color: #333;
+        }
+
+        .sidebar-button:hover {
+            background-color: #ccc;
+        }
+    </style>
 {% endblock %}
