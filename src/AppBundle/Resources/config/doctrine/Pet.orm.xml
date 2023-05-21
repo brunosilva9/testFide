@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="AppBundle\Entity\Pet" table="pet">
+    <indexes>
+      <index name="FK_pet_owner" columns="humanRut"/>
+    </indexes>
+    <unique-constraints>
+      <unique-constraint name="UNIQ_E4529B853DD324C3" columns="chipNumber"/>
+    </unique-constraints>
+    <id name="id" type="integer" column="id">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="chipnumber" type="integer" column="chipNumber" nullable="false">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="type" type="string" column="type" length="255" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="name" type="string" column="name" length="255" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="lastname" type="string" column="lastName" length="255" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="sex" type="boolean" column="sex" nullable="false"/>
+    <field name="color" type="string" column="color" length="255" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="dateofbirth" type="date" column="dateOfBirth" nullable="false"/>
+    <field name="neutered" type="boolean" column="neutered" nullable="false"/>
+    <field name="observations" type="string" column="observations" length="255" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <many-to-one field="humanrut" target-entity="Owner" fetch="LAZY">
+      <join-columns>
+        <join-column name="humanRut" referenced-column-name="rut"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>
