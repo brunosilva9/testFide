@@ -77,14 +77,20 @@ class pet
      */
     private $neutered;
 
-    /**
+   /**
      * @var string
      *
      * @ORM\Column(name="humanRut", type="string", length=12)
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Owner", inversedBy="pets")
-     * @ORM\JoinColumn(name="humanRut", referencedColumnName="rut")
      */
     private $humanRut;
+
+    /**
+     * @var owner
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\owner", inversedBy="pets")
+     * @ORM\JoinColumn(name="humanRut", referencedColumnName="rut")
+     */
+    private $owner;
 
     /**
      * @var string
@@ -172,6 +178,52 @@ class pet
      *
      * @return string
      */
+     /**
+     * Set humanRut
+     *
+     * @param string $humanRut
+     *
+     * @return pet
+     */
+    public function setHumanRut($humanRut)
+    {
+        $this->humanRut = $humanRut;
+
+        return $this;
+    }
+
+    /**
+     * Get humanRut
+     *
+     * @return string
+     */
+    public function getHumanRut()
+    {
+        return $this->humanRut;
+    }
+    /**
+     * Set owner
+     *
+     * @param owner $owner
+     *
+     * @return pet
+     */
+    public function setOwner($owner)
+    {
+        $this->owner = $owner;
+
+        return $this;
+    }
+
+    /**
+     * Get owner
+     *
+     * @return owner
+     */
+    public function getOwner()
+    {
+        return $this->owner;
+    }
     public function getName()
     {
         return $this->name;
@@ -297,29 +349,6 @@ class pet
         return $this->neutered;
     }
 
-    /**
-     * Set humanRut
-     *
-     * @param string $humanRut
-     *
-     * @return pet
-     */
-    public function setHumanRut($humanRut)
-    {
-        $this->humanRut = $humanRut;
-
-        return $this;
-    }
-
-    /**
-     * Get humanRut
-     *
-     * @return string
-     */
-    public function getHumanRut()
-    {
-        return $this->humanRut;
-    }
 
     /**
      * Set observations

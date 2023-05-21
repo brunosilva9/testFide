@@ -25,6 +25,7 @@ class owner
      * @var string
      * 
      * @ORM\Column(name="rut", type="string", length=12, unique=true)
+     * 
      */
     private $rut;
 
