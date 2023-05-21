@@ -1,0 +1,30 @@
+# app/config/routing.yml
+login:
+    path: /login
+    defaults:
+        _controller: AppBundle:Auth:login
+
+signup:
+    path: /signup
+    controller: AppBundle\Controller\AuthController::signupAction
+
+authenticate:
+    path: /authenticate
+    defaults:
+        _controller: AppBundle:Auth:authenticate
+        _method: POST
+
+register:
+    path: /register
+    defaults:
+        _controller: AppBundle:Auth:register
+        _method: POST
+
+welcome:
+    path: /welcome
+    defaults:
+        _controller: AppBundle:Auth:welcome
+logout:
+    path: /logout
+    defaults:
+        _controller: AppBundle:Auth:logout
