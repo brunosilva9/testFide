@@ -24,7 +24,7 @@
             <div id="list" style="display: none;">
                 <!-- Contenido del componente de lista de mascotas -->
                 <h2>Componente de lista de mascotas</h2>
-                {% include 'list.html.twig' %}
+                {% include 'list.html.twig' with {'pets': pets} %}
                 <!-- Agrega aquí el código HTML y Twig necesario para el componente de lista de mascotas -->
             </div>
         </div>

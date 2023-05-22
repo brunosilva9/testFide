@@ -4,22 +4,31 @@ namespace AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use AppBundle\Entity\User;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\Authentication\AuthenticationManagerInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-
+use AppBundle\Entity\User;
+use AppBundle\Entity\Pet;
+use AppBundle\Repository\PetRepository;
 
 
 class AuthController extends AbstractController
 {
+    private $petRepository;
+
+    public function __construct(PetRepository $petRepository)
+    {
+        $this->petRepository = $petRepository;
+    }
+
     /**
      * @Route("/login", name="login")
      */
+
     public function loginAction(AuthenticationUtils $authenticationUtils)
     {
         // Verificar si el usuario ya está autenticado
@@ -54,12 +63,23 @@ class AuthController extends AbstractController
 
         // Obtén el nombre de usuario del token de autenticación
         $username = $this->getUser()->getUsername();
+        $entityManager = $this->getDoctrine()->getManager();
 
-        // Renderiza la plantilla de bienvenida
+        $pets = $entityManager->getRepository(Pet::class)->findAll();
+    
+
+    
+
+        // Obtén la lista de mascotas
+       # $pets = $this->petRepository->findAll();
+
+        // Renderiza la plantilla de bienvenida con la lista de mascotas
         return $this->render('default/welcome.html.twig', [
             'username' => $username,
+            'pets' => $pets,
         ]);
     }
+
     /**
      * @Route("/register", name="register", methods={"POST"})
      */
@@ -137,9 +157,6 @@ class AuthController extends AbstractController
             return $this->redirectToRoute('login', ['error' => 'Authentication error']);
         }
 
-
-        // Inicia la sesión del usuario
-        // ...
 
         // Redirige a la página de inicio después de iniciar sesión exitosamente
         # return $this->redirectToRoute('/homepage');

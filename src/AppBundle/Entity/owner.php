@@ -5,12 +5,12 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * owner
+ * Owner
  *
  * @ORM\Table(name="owner")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\ownerRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\OwnerRepository")
  */
-class owner
+class Owner
 {
     /**
      * @var int
@@ -23,9 +23,8 @@ class owner
 
     /**
      * @var string
-     * 
+     *
      * @ORM\Column(name="rut", type="string", length=12, unique=true)
-     * 
      */
     private $rut;
 
@@ -59,7 +58,7 @@ class owner
      *
      * @param string $rut
      *
-     * @return owner
+     * @return Owner
      */
     public function setRut($rut)
     {
@@ -83,7 +82,7 @@ class owner
      *
      * @param string $name
      *
-     * @return owner
+     * @return Owner
      */
     public function setName($name)
     {
@@ -107,7 +106,7 @@ class owner
      *
      * @param string $lastName
      *
-     * @return owner
+     * @return Owner
      */
     public function setLastName($lastName)
     {

@@ -4,7 +4,43 @@
 
 {% block body %}
     
-    <h2>List</h2>
+    <table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Numero de Chip</th>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Sexo</th>
+            <th>Color</th>
+            <th>Fecha de Nacimiento</th>
+            <th>Castrado</th>
+            <th>RUT Humano</th>
+            <th>Observaciones</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for pet in pets %}
+            <tr>
+                <td>{{ pet.id }}</td>
+                <td>{{ pet.chipNumber }}</td>
+                <td>{{ pet.name }}</td>
+                <td>{{ pet.lastName }}</td>
+                <td>{{ pet.sex ? 'Hembra' : 'Macho' }}</td>
+                <td>{{ pet.color }}</td>
+                <td>{{ pet.dateOfBirth|date('d/m/Y') }}</td>
+                <td>{{ pet.neutered ? 'Sí' : 'No' }}</td>
+                <td>{{ pet.humanRut }}</td>
+                <td>{{ pet.observations }}</td>
+                <td>
+                    <a href=''>Editar</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
 
 
 {% endblock %}

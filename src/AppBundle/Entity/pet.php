@@ -5,12 +5,12 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * pet
+ * Pet
  *
  * @ORM\Table(name="pet")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\petRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\PetRepository")
  */
-class pet
+class Pet
 {
     /**
      * @var int
@@ -77,28 +77,20 @@ class pet
      */
     private $neutered;
 
-   /**
+    /**
      * @var string
      *
      * @ORM\Column(name="humanRut", type="string", length=12)
-     */
-    private $humanRut;
-
-    /**
-     * @var owner
-     *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\owner", inversedBy="pets")
+          * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Owner", inversedBy="pets")
      * @ORM\JoinColumn(name="humanRut", referencedColumnName="rut")
      */
-    private $owner;
-
+    private $humanRut;
     /**
      * @var string
-     * 
-     * @ORM\Column(name="observations", type="string", length=255)
+     *
+     * @ORM\Column(name="observations", type="string", length=255, nullable=true)
      */
     private $observations;
-
 
 
     /**
@@ -116,7 +108,7 @@ class pet
      *
      * @param integer $chipNumber
      *
-     * @return pet
+     * @return Pet
      */
     public function setChipNumber($chipNumber)
     {
@@ -140,7 +132,7 @@ class pet
      *
      * @param string $type
      *
-     * @return pet
+     * @return Pet
      */
     public function setType($type)
     {
@@ -164,7 +156,7 @@ class pet
      *
      * @param string $name
      *
-     * @return pet
+     * @return Pet
      */
     public function setName($name)
     {
@@ -178,52 +170,6 @@ class pet
      *
      * @return string
      */
-     /**
-     * Set humanRut
-     *
-     * @param string $humanRut
-     *
-     * @return pet
-     */
-    public function setHumanRut($humanRut)
-    {
-        $this->humanRut = $humanRut;
-
-        return $this;
-    }
-
-    /**
-     * Get humanRut
-     *
-     * @return string
-     */
-    public function getHumanRut()
-    {
-        return $this->humanRut;
-    }
-    /**
-     * Set owner
-     *
-     * @param owner $owner
-     *
-     * @return pet
-     */
-    public function setOwner($owner)
-    {
-        $this->owner = $owner;
-
-        return $this;
-    }
-
-    /**
-     * Get owner
-     *
-     * @return owner
-     */
-    public function getOwner()
-    {
-        return $this->owner;
-    }
     public function getName()
     {
         return $this->name;
@@ -234,7 +180,7 @@ class pet
      *
      * @param string $lastName
      *
-     * @return pet
+     * @return Pet
      */
     public function setLastName($lastName)
     {
@@ -258,7 +204,7 @@ class pet
      *
      * @param boolean $sex
      *
-     * @return pet
+     * @return Pet
      */
     public function setSex($sex)
     {
@@ -282,7 +228,7 @@ class pet
      *
      * @param string $color
      *
-     * @return pet
+     * @return Pet
      */
     public function setColor($color)
     {
@@ -306,7 +252,7 @@ class pet
      *
      * @param \DateTime $dateOfBirth
      *
-     * @return pet
+     * @return Pet
      */
     public function setDateOfBirth($dateOfBirth)
     {
@@ -330,7 +276,7 @@ class pet
      *
      * @param boolean $neutered
      *
-     * @return pet
+     * @return Pet
      */
     public function setNeutered($neutered)
     {
@@ -349,13 +295,36 @@ class pet
         return $this->neutered;
     }
 
+    /**
+     * Set humanRut
+     *
+     * @param string $humanRut
+     *
+     * @return Pet
+     */
+    public function setHumanRut($humanRut)
+    {
+        $this->humanRut = $humanRut;
+
+        return $this;
+    }
+
+    /**
+     * Get humanRut
+     *
+     * @return string
+     */
+    public function getHumanRut()
+    {
+        return $this->humanRut;
+    }
 
     /**
      * Set observations
      *
      * @param string $observations
      *
-     * @return pet
+     * @return Pet
      */
     public function setObservations($observations)
     {

@@ -29,6 +29,14 @@ services:
         public: true
         tags: ['controller.service_arguments']
 
+    Doctrine\ORM\Mapping\ClassMetadata:
+        public: false
+
+    AppBundle\Repository\PetRepository:
+        factory: ['@doctrine.orm.default_entity_manager', getRepository]
+        arguments:
+            - AppBundle\Entity\Pet
+            
     authentication.manager:
         class: Symfony\Component\Security\Core\Authentication\Provider\AuthenticationProviderManager
         public: false
