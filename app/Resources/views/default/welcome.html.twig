@@ -8,10 +8,18 @@
     </div>
 
     <div id="sidebar">
-        <button class="sidebar-button" onclick="mostrarComponente('search')">Buscar mascota</button>
-        <button class="sidebar-button" onclick="mostrarComponente('list')">Lista de mascotas</button>
+        <button class="sidebar-button" onclick="showComponnet('addPet')">Agregar mascota</button>
+        <button class="sidebar-button" onclick="showComponnet('search')">Buscar mascota</button>
+        <button class="sidebar-button" onclick="showComponnet('list')">Lista de mascotas</button>
         
         <div id="componente-container">
+        <!-- Aquí se incluye el componente de búsqueda -->
+            <div id="addPet" style="display: none;">
+                <!-- Contenido del componente de búsqueda -->
+                <h2>Componente de agregacion</h2>
+                {% include 'addPet.html.twig' %}
+                <!-- Agrega aquí el código HTML y Twig necesario para el componente de búsqueda -->
+            </div>
             <!-- Aquí se incluye el componente de búsqueda -->
             <div id="search" style="display: none;">
                 <!-- Contenido del componente de búsqueda -->
@@ -34,9 +42,9 @@
 
 {% block javascripts %}
     <script>
-        function mostrarComponente(componente) {
+        function showComponnet(component) {
             var componenteContainer = document.getElementById('componente-container');
-            var componenteSeleccionado = document.getElementById(componente);
+            var componenteSeleccionado = document.getElementById(component);
 
             // Ocultar todos los componentes
             var componentes = componenteContainer.children;
