@@ -3,8 +3,8 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    
-    <table>
+
+<table>
     <thead>
         <tr>
             <th>ID</th>
@@ -22,6 +22,7 @@
     </thead>
     <tbody>
         {% for pet in pets %}
+            {% set editMode = true %}
             <tr>
                 <td>{{ pet.id }}</td>
                 <td>{{ pet.chipNumber }}</td>
@@ -34,18 +35,59 @@
                 <td>{{ pet.humanRut }}</td>
                 <td>{{ pet.observations }}</td>
                 <td>
-                    <a href=''>Editar</a>
-                    <a>/</a>
-                    <form action="{{ path('deletePet', {'id': pet.id}) }}" method="post" onsubmit="return confirm('¿Estás seguro de que deseas eliminar esta mascota?')">
-                        <button type="submit" class="btn btn-danger">Eliminar</button>
-                    </form>
+                    {% if editMode %}
+                        <form action="{{ path('updatePet', {'id': pet.id}) }}" method="post">
+                            
+                            <label for="name">Tipo:</label>
+                            <select id="type" name="type" required value="{{ pet.type }} ">
+                                <option value="Perro">Perro</option>
+                                <option value="Gato">Gato</option>
+                                <option value="Huron">Huron</option>
+                                <option value="Tortuga">Tortuga</option>
+                            </select>
+                            <label for="name">Nombre:</label>
+                            <input type="text" name="name" value="{{ pet.name }}" required>
+                            <label for="name">Apellido:</label>
+                            <input type="text" name="lastName" value="{{ pet.lastName }}" required>
+                            <select id="sex" name="sex" required>
+                                <option value=0>Hembra</option>
+                                <option value=1>Macho</option>
+                            </select>
+                            <label for="name">color:</label>
+                            <input type="text" name="color" value="{{ pet.color }}" required>
+                            <input type="date" id="dateOfBirth" name="dateOfBirth" value="{{ pet.dateOfBirth|date('Y-m-d') }}"  required>
+                            <label for="name">Esterilizado:</label>
+                            <input type="checkbox" name="neutered" {{ pet.neutered ? 'checked' : '' }}>
+                            <label for="name">Observaciones:</label>
+                            <input type="text" name="observations" value="{{ pet.observations }}" >
+                            <button type="submit" class="btn btn-primary">Guardar</button>
+                        </form>
+                    {% else %}
+                        <button type="button" class="btn btn-primary" onclick="toggleEditMode({{ pet.id }})">Editar</button>
+                        <a>/</a>
+                        <form action="{{ path('deletePet', {'id': pet.id}) }}" method="post" onsubmit="return confirm('¿Estás seguro de que deseas eliminar esta mascota?')">
+                            <button type="submit" class="btn btn-danger">Eliminar</button>
+                        </form>
+                    {% endif %}
                 </td>
             </tr>
         {% endfor %}
     </tbody>
 </table>
 
-
-
 {% endblock %}
 
+{% block javascripts %}
+    <script>
+        function toggleEditMode(petId) {
+            var petRow = document.getElementById('pet-row-' + petId);
+            var editMode = petRow.getAttribute('data-edit-mode');
+            
+            if (editMode === 'false') {
+                petRow.setAttribute('data-edit-mode', 'true');
+            } else {
+                petRow.setAttribute('data-edit-mode', 'false');
+            }
+        }
+    </script>
+{% endblock %}

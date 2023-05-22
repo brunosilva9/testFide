@@ -47,3 +47,9 @@ deletePet:
     path: /deletePet/{id}
     methods: [POST]
     controller: AppBundle\Controller\AuthController::deletePet
+
+updatePet:
+    path: '/updatePet/{id}'
+    controller: 'AppBundle\Controller\AuthController::updatePet'
+    methods: [POST,PUT]
+

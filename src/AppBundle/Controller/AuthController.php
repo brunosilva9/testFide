@@ -259,4 +259,48 @@ class AuthController extends AbstractController
     return $this->redirectToRoute('welcome');
 }
 
+    /**
+     * @Route("/updatePet/{id}", name="updatePet", methods={"POST"})
+     */
+    public function updatePet(Request $request, $id)
+    
+    {
+        // Obtener la mascota de la base de datos según el ID
+       
+        $pet = $this->getDoctrine()->getRepository(Pet::class)->find($id);
+
+        // Verificar si la mascota existe
+        if (!$pet) {
+            throw $this->createNotFoundException('La mascota no fue encontrada');
+        }
+
+        // Obtener los datos del formulario de edición
+        $type = $request->request->get('type');
+        $name = $request->request->get('name');
+        $lastName = $request->request->get('lastName');
+        $sex = $request->request->get('sex');
+        $color = $request->request->get('color');
+        $dateOfBirth = new \DateTime($request->request->get('dateOfBirth'));
+        $neutered = isset($_POST['neutered']) ? true : false;
+        $observations = $request->request->get('observations');
+
+        // Actualizar los datos de la mascota
+        $pet->setType($type);
+        $pet->setName($name);
+        $pet->setLastName($lastName);
+        $pet->setSex($sex);
+        $pet->setColor($color);
+        $pet->setDateOfBirth($dateOfBirth);
+        $pet->setNeutered($neutered);
+        $pet->setObservations($observations);
+
+   
+      
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->flush();
+
+        return $this->redirectToRoute('welcome');
+    }
+
 }
