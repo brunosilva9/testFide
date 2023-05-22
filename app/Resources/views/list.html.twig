@@ -4,6 +4,9 @@
 
 {% block body %}
 
+
+<input type="text" id="searchInput" placeholder="Buscar por RUT, número de chip o nombre de mascota">
+<br />
 <table>
     <thead>
         <tr>
@@ -23,7 +26,7 @@
     <tbody>
         {% for pet in pets %}
             {% set editMode = true %}
-            <tr>
+            <tr class="pet-row">
                 <td>{{ pet.id }}</td>
                 <td>{{ pet.chipNumber }}</td>
                 <td>{{ pet.name }}</td>
@@ -89,5 +92,20 @@
                 petRow.setAttribute('data-edit-mode', 'false');
             }
         }
+
+        document.getElementById('searchInput').addEventListener('input', function() {
+        var filterValue = this.value.toLowerCase();
+        var rows = document.getElementsByClassName('pet-row');
+
+        for (var i = 0; i < rows.length; i++) {
+            var petRow = rows[i];
+            var petData = petRow.innerText.toLowerCase();
+            if (petData.indexOf(filterValue) > -1) {
+                petRow.style.display = '';
+            } else {
+                petRow.style.display = 'none';
+            }
+        }
+    });
     </script>
 {% endblock %}
