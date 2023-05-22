@@ -35,6 +35,10 @@
                 <td>{{ pet.observations }}</td>
                 <td>
                     <a href=''>Editar</a>
+                    <a>/</a>
+                    <form action="{{ path('deletePet', {'id': pet.id}) }}" method="post" onsubmit="return confirm('¿Estás seguro de que deseas eliminar esta mascota?')">
+                        <button type="submit" class="btn btn-danger">Eliminar</button>
+                    </form>
                 </td>
             </tr>
         {% endfor %}

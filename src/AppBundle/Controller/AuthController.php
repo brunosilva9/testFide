@@ -13,8 +13,7 @@ use Symfony\Component\Security\Core\Authentication\AuthenticationManagerInterfac
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use AppBundle\Entity\User;
 use AppBundle\Entity\Pet;
-use AppBundle\Repository\PetRepository;
-
+use AppBundle\Entity\Owner;
 
 class AuthController extends AbstractController
 {
@@ -76,12 +75,6 @@ class AuthController extends AbstractController
 
         $pets = $entityManager->getRepository(Pet::class)->findAll();
 
-
-
-
-        // Obtén la lista de mascotas
-        # $pets = $this->petRepository->findAll();
-
         // Renderiza la plantilla de bienvenida con la lista de mascotas
         return $this->render('default/welcome.html.twig', [
             'username' => $username,
@@ -122,7 +115,6 @@ class AuthController extends AbstractController
 
 
         // Redirige a la página de inicio de sesión después del registro exitoso
-        #return $this->redirectToRoute('login');
         return $this->redirectToRoute('login');
     }
     /**
@@ -138,13 +130,7 @@ class AuthController extends AbstractController
         $entityManager = $this->getDoctrine()->getManager();
 
         $user = $entityManager->getRepository(User::class)->findOneBy(['userName' => $username]);
-        #$pass = $entityManager->getRepository(User::class)->findOneBy(['password' => $password]);
-        #var_dump($user);
-        #die();
-        #$user = $entityManager->getRepository(User::class);
 
-
-        // Verifica si el usuario existe y la contraseña es correcta
         // Verifica si el usuario existe y la contraseña es correcta
         if (!$user || !$passwordEncoder->isPasswordValid($user, $password)) {
             // Redirige de nuevo al formulario de inicio de sesión con un mensaje de error
@@ -155,8 +141,6 @@ class AuthController extends AbstractController
             // Autentica al usuario y establece su identidad en la sesión
             $token = new UsernamePasswordToken($user, null, 'main', $user->getIsAdmin() ? ['ROLE_ADMIN'] : ['ROLE_USER']);
             $this->get('security.token_storage')->setToken($token);
-            #var_dump($token);
-            #die();
             return $this->redirectToRoute('welcome');
 
 
@@ -167,8 +151,6 @@ class AuthController extends AbstractController
         }
 
 
-        // Redirige a la página de inicio después de iniciar sesión exitosamente
-        # return $this->redirectToRoute('/homepage');
     }
     /**
      * @Route("/logout", name="logout")
@@ -227,5 +209,54 @@ class AuthController extends AbstractController
             return $this->redirectToRoute('welcome');
         }
     }
+    /**
+     * @Route("/add-owner", name="add_owner", methods={"POST"})
+     */
+    public function addOwner(Request $request)
+    {
+        // Obtén los datos del formulario para agregar propietario
+        $name = $request->request->get('name');
+        $lastName = $request->request->get('lastName');
+        $rut = $request->request->get('rut'); // todo  clean cache
+        ## todo Validar Rut
+        $owner = new Owner();
+        $owner->setName($name);
+        $owner->setLastName($lastName);
+        $owner->setRut($rut);
+
+        // Guarda el nuevo propietario en la base de datos
+        $entityManager = $this->getDoctrine()->getManager();
+
+        try {
+            $entityManager->persist($owner);
+            $entityManager->flush();
+            return $this->redirectToRoute('welcome');
+
+        } catch (\Exception $e) {
+            // Manejo de la excepción
+            echo 'Error al guardar el propietario: ' . $e->getMessage();
+            return $this->redirectToRoute('welcome');
+        }
+    }
+
+    /**
+     * @Route("/deletePet", name="deletePet", methods={"POST"})
+     */
+    public function deletePet(Request $request, $id)
+{
+   
+    $entityManager = $this->getDoctrine()->getManager();
+    $pet = $entityManager->getRepository(Pet::class)->find($id);
+    try {
+        $entityManager->remove($pet);
+        $entityManager->flush();
+    } catch (\Exception $e) {
+        // Manejo de la excepción
+        echo 'Error al eliminar la mascota: ' . $e->getMessage();
+        return $this->redirectToRoute('welcome');
+    }
+
+    return $this->redirectToRoute('welcome');
+}
 
 }

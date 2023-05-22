@@ -37,3 +37,13 @@ add_pet:
     path: /add-pet
     methods: [POST]
     controller: AppBundle\Controller\AuthController::addPet
+
+add_owner:
+    path: /add-owner
+    methods: [POST]
+    controller: AppBundle\Controller\AuthController::addOwner
+
+deletePet:
+    path: /deletePet/{id}
+    methods: [POST]
+    controller: AppBundle\Controller\AuthController::deletePet

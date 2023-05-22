@@ -11,30 +11,25 @@
         <button class="sidebar-button" onclick="showComponnet('addPet')">Agregar mascota</button>
         <button class="sidebar-button" onclick="showComponnet('search')">Buscar mascota</button>
         <button class="sidebar-button" onclick="showComponnet('list')">Lista de mascotas</button>
+        <button class="sidebar-button" onclick="showComponnet('addOwner')">Agregar dueño</button>
 
 
         <div id="componentContainer">
-        <!-- Aquí se incluye el componente de búsqueda -->
             <div id="addPet" style="display: none;">
-                <!-- Contenido del componente de búsqueda -->
                 <h2>Componente de agregacion</h2>
                 {% include 'addPet.html.twig' %}
-                <!-- Agrega aquí el código HTML y Twig necesario para el componente de búsqueda -->
             </div>
-            <!-- Aquí se incluye el componente de búsqueda -->
             <div id="search" style="display: none;">
-                <!-- Contenido del componente de búsqueda -->
                 <h2>Componente de búsqueda</h2>
                 {% include 'search.html.twig' %}
-                <!-- Agrega aquí el código HTML y Twig necesario para el componente de búsqueda -->
             </div>
-            
-            <!-- Aquí se incluye el componente de lista de mascotas -->
             <div id="list" style="display: none;">
-                <!-- Contenido del componente de lista de mascotas -->
                 <h2>Componente de lista de mascotas</h2>
                 {% include 'list.html.twig' with {'pets': pets} %}
-                <!-- Agrega aquí el código HTML y Twig necesario para el componente de lista de mascotas -->
+            </div>
+            <div id="addOwner" style="display: none;">
+                <h2>Componente de lista de mascotas</h2>
+                {% include 'addOwner.html.twig' %}
             </div>
         </div>
     </div>
