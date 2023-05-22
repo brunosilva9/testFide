@@ -28,3 +28,7 @@ logout:
     path: /logout
     defaults:
         _controller: AppBundle:Auth:logout
+add_pet:
+    path: /add-pet
+    methods: [POST]
+    controller: AppBundle\Controller\AuthController::addPet
