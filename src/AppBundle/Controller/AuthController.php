@@ -18,13 +18,22 @@ use AppBundle\Repository\PetRepository;
 
 class AuthController extends AbstractController
 {
-    private $petRepository;
-
-    public function __construct(PetRepository $petRepository)
+    /**
+     * @Route("/", name="homepage")
+     */
+    public function indexAction(AuthenticationUtils $authenticationUtils)
     {
-        $this->petRepository = $petRepository;
-    }
+        // replace this example code with whatever you need
+        if ($this->getUser()) {
+            return $this->redirectToRoute('welcome');
+        }
 
+        $error = $authenticationUtils->getLastAuthenticationError();
+        // ...
+        return $this->render('auth/login.html.twig', [
+            'error' => $error,
+        ]);
+    }
     /**
      * @Route("/login", name="login")
      */
@@ -188,7 +197,7 @@ class AuthController extends AbstractController
         $neutered = isset($_POST['neutered']) ? true : false;
         $humanRut = $request->request->get('humanRut');
         $observations = $request->request->get('observations');
-       
+
         // Crea una nueva instancia de Pet
         $pet = new Pet();
         $pet->setChipNumber($chipNumber);
@@ -201,7 +210,7 @@ class AuthController extends AbstractController
         $pet->setNeutered($neutered);
         $pet->setHumanRut($humanRut);
         $pet->setObservations($observations);
-        
+
 
         // Guarda la nueva mascota en la base de datos
         $entityManager = $this->getDoctrine()->getManager();

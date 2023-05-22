@@ -24,6 +24,11 @@ welcome:
     path: /welcome
     defaults:
         _controller: AppBundle:Auth:welcome
+homepage:
+    path: /
+    defaults:
+        _controller: AppBundle:Auth:index
+
 logout:
     path: /logout
     defaults:

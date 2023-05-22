@@ -16,19 +16,6 @@ class DefaultController extends Controller
     public function indexAction(Request $request)
     {
         // replace this example code with whatever you need
-        return $this->render('default/index.html.twig', [
-            'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
-        ]);
-    }
-}
-class WelcomeController extends AbstractController
-{
-    /**
-     * @Route("/welcome", name="welcome")
-     */
-    public function index()
-    {
-        // Lógica para la página de bienvenida
-        return $this->render('welcome/index.html.twig');
+        return $this->render('default/welcome.html.twig');
     }
 }
