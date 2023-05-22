@@ -8,10 +8,18 @@
     </div>
 
     <div id="sidebar">
-        <button class="sidebar-button" onclick="mostrarComponente('search')">Buscar mascota</button>
-        <button class="sidebar-button" onclick="mostrarComponente('list')">Lista de mascotas</button>
+        <button class="sidebar-button" onclick="showComponnet('addPet')">Agregar mascota</button>
+        <button class="sidebar-button" onclick="showComponnet('search')">Buscar mascota</button>
+        <button class="sidebar-button" onclick="showComponnet('list')">Lista de mascotas</button>
         
-        <div id="componente-container">
+        <div id="componentContainer">
+        <!-- Aquí se incluye el componente de búsqueda -->
+            <div id="addPet" style="display: none;">
+                <!-- Contenido del componente de búsqueda -->
+                <h2>Componente de agregacion</h2>
+                {% include 'addPet.html.twig' %}
+                <!-- Agrega aquí el código HTML y Twig necesario para el componente de búsqueda -->
+            </div>
             <!-- Aquí se incluye el componente de búsqueda -->
             <div id="search" style="display: none;">
                 <!-- Contenido del componente de búsqueda -->
@@ -34,18 +42,18 @@
 
 {% block javascripts %}
     <script>
-        function mostrarComponente(componente) {
-            var componenteContainer = document.getElementById('componente-container');
-            var componenteSeleccionado = document.getElementById(componente);
+        function showComponnet(component) {
+            var componertContainer = document.getElementById('componentContainer');
+            var selectedComponet = document.getElementById(component);
 
-            // Ocultar todos los componentes
-            var componentes = componenteContainer.children;
-            for (var i = 0; i < componentes.length; i++) {
-                componentes[i].style.display = 'none';
+            // Ocultar todos los componets
+            var componets = componertContainer.children;
+            for (var i = 0; i < componets.length; i++) {
+                componets[i].style.display = 'none';
             }
 
             // Mostrar el componente seleccionado
-            componenteSeleccionado.style.display = 'block';
+            selectedComponet.style.display = 'block';
         }
     </script>
 {% endblock %}

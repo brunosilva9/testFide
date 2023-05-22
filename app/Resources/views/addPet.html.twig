@@ -1,0 +1,48 @@
+{# welcome.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Agregar Mascota</h1>
+
+<form action="/add-pet" method="post">
+    <label for="chipNumber">Número de chip:</label>
+    <input type="text" id="chipNumber" name="chipNumber" required>
+
+    <label for="type">Tipo:</label>
+        <select id="type" name="type" required>
+            <option value="Perro">Perro</option>
+            <option value="Gato">Gato</option>
+            <option value="Huron">Huron</option>
+            <option value="Tortuga">Tortuga</option>
+        </select><br>
+
+    <label for="name">Nombre:</label>
+    <input type="text" id="name" name="name" required>
+
+    <label for="lastName">Apellido:</label>
+    <input type="text" id="lastName" name="lastName" >
+    <label for="sex">Sexo:</label>
+    <select id="sex" name="sex" required>
+            <option value=0>Hembra</option>
+            <option value=1>Macho</option>
+        </select><br>
+
+    <label for="color">Color:</label>
+    <input type="text" id="color" name="color" required>
+
+    <label for="dateOfBirth">Fecha de nacimiento:</label>
+    <input type="date" id="dateOfBirth" name="dateOfBirth" required>
+
+    <label for="neutered">Esterilizado:</label>
+    <input type="checkbox" id="neutered" name="neutered">
+
+    <label for="humanRut">RUT del dueño:</label required>
+    <input type="text" id="humanRut" name="humanRut" pattern="\d{7,8}-[0-9Kk]" required title="Ingrese un RUT válido (Ej. 18708323-0)"><br>
+
+    <label for="observations">Observaciones:</label>
+    <textarea id="observations" name="observations"></textarea>
+
+    <input type="submit" value="Agregar">
+</form>
+{% endblock %}

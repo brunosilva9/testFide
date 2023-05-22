@@ -66,12 +66,12 @@ class AuthController extends AbstractController
         $entityManager = $this->getDoctrine()->getManager();
 
         $pets = $entityManager->getRepository(Pet::class)->findAll();
-    
 
-    
+
+
 
         // Obtén la lista de mascotas
-       # $pets = $this->petRepository->findAll();
+        # $pets = $this->petRepository->findAll();
 
         // Renderiza la plantilla de bienvenida con la lista de mascotas
         return $this->render('default/welcome.html.twig', [
@@ -172,6 +172,51 @@ class AuthController extends AbstractController
         // Redirigir al formulario de inicio de sesión
         return new RedirectResponse($this->generateUrl('login'));
     }
+    /**
+     * @Route("/add-pet", name="add_pet", methods={"POST"})
+     */
+    public function addPet(Request $request)
+    {
+        // Obtén los datos del formulario de agregar mascota
+        $chipNumber = $request->request->get('chipNumber');
+        $type = $request->request->get('type');
+        $name = $request->request->get('name');
+        $lastName = $request->request->get('lastName');
+        $sex = $request->request->get('sex');
+        $color = $request->request->get('color');
+        $dateOfBirth = new \DateTime($request->request->get('dateOfBirth'));
+        $neutered = isset($_POST['neutered']) ? true : false;
+        $humanRut = $request->request->get('humanRut');
+        $observations = $request->request->get('observations');
+       
+        // Crea una nueva instancia de Pet
+        $pet = new Pet();
+        $pet->setChipNumber($chipNumber);
+        $pet->setType($type);
+        $pet->setName($name);
+        $pet->setLastName($lastName);
+        $pet->setSex($sex);
+        $pet->setColor($color);
+        $pet->setDateOfBirth($dateOfBirth);
+        $pet->setNeutered($neutered);
+        $pet->setHumanRut($humanRut);
+        $pet->setObservations($observations);
+        
 
+        // Guarda la nueva mascota en la base de datos
+        $entityManager = $this->getDoctrine()->getManager();
+        try {
+            $entityManager->persist($pet);
+            $entityManager->flush();
+            return $this->redirectToRoute('welcome');
+
+            // Resto del código después de la inserción exitosa
+
+        } catch (\Exception $e) {
+            // Manejo de la excepción
+            echo 'Error al guardar la mascota: ' . $e->getMessage();
+            return $this->redirectToRoute('welcome');
+        }
+    }
 
 }
