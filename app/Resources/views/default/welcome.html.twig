@@ -1,77 +1,75 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    
-    <div> 
-        <h1>Welcome, {{ app.user.username }}!</h1>
-        <a class="closeSession" href="{{ path('logout') }}">Cerrar sesión</a>
-    </div>
+    <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+        <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="#">Fur fur: Welcome, {{ app.user.username }}!</a>
+        <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse" data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <ul class="navbar-nav px-3">
+            <li class="nav-item text-nowrap">
+                <a class="closeSession" href="{{ path('logout') }}">Cerrar sesión</a>
+            </li>
+        </ul>
+    </nav>
 
-    <div id="sidebar">
-        <button class="sidebar-button" onclick="showComponnet('addPet')">Agregar mascota</button>
-        <button class="sidebar-button" onclick="showComponnet('search')">Buscar mascota</button>
-        <button class="sidebar-button" onclick="showComponnet('list')">Lista de mascotas</button>
-        <button class="sidebar-button" onclick="showComponnet('addOwner')">Agregar dueño</button>
+    <div class="container-fluid">
+        <div class="row">
+            <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+                <div class="sidebar-sticky pt-3">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <button class="sidebar-button btn btn-primary" onclick="showComponent('addPet')">Agregar mascota</button>
+                        </li>
+                        <li class="nav-item">
+                           <a >&nbsp</a>
+                        </li>
+                        <li class="nav-item">
+                            <button class="sidebar-button btn btn-primary" onclick="showComponent('list')">Lista de mascotas</button>
+                        </li>
+                        <li class="nav-item">
+                           <a >&nbsp</a>
+                        </li>
+                        <li class="nav-item">
+                            <button class="sidebar-button btn btn-primary" onclick="showComponent('addOwner')">Agregar dueño</button>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
 
-
-        <div id="componentContainer">
-            <div id="addPet" style="display: none;">
-                <h2>Componente de agregacion</h2>
-                {% include 'addPet.html.twig' %}
-            </div>
-            <div id="search" style="display: none;">
-                <h2>Componente de búsqueda</h2>
-                {% include 'search.html.twig' %}
-            </div>
-            <div id="list" style="display: none;">
-                <h2>Componente de lista de mascotas</h2>
-                {% include 'list.html.twig' with {'pets': pets} %}
-            </div>
-            <div id="addOwner" style="display: none;">
-                <h2>Componente de lista de mascotas</h2>
-                {% include 'addOwner.html.twig' %}
-            </div>
+            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <div id="component-container">
+                        <div id="addPet" class="component" style="display: none;">
+                            <h2>Componente de agregacion</h2>
+                            {% include 'addPet.html.twig' %}
+                        </div>
+                        <div id="list" class="component" style="display: none;">
+                            <h2>Componente de lista de mascotas</h2>
+                            {% include 'list.html.twig' with {'pets': pets} %}
+                        </div>
+                        <div id="addOwner" class="component" style="display: none;">
+                            <h2>Componente de lista de mascotas</h2>
+                            {% include 'addOwner.html.twig' %}
+                        </div>
+                    </div>
+                </div>
+            </main>
         </div>
     </div>
-
 {% endblock %}
 
 {% block javascripts %}
     <script>
-        function showComponnet(component) {
-            var componertContainer = document.getElementById('componentContainer');
-            var selectedComponet = document.getElementById(component);
-
-
-            // Ocultar todos los componets
-            var componets = componertContainer.children;
-            for (var i = 0; i < componets.length; i++) {
-                componets[i].style.display = 'none';
+        function showComponent(component) {
+            var components = document.getElementsByClassName('component');
+            
+            for (var i = 0; i < components.length; i++) {
+                components[i].style.display = 'none';
             }
-
-            // Mostrar el componente seleccionado
-            selectedComponet.style.display = 'block';
+            
+            var selectedComponent = document.getElementById(component);
+            selectedComponent.style.display = 'block';
         }
     </script>
-{% endblock %}
-
-{% block stylesheets %}
-    <style>
-        .sidebar {
-            width: 200px;
-            background-color: #f2f2f2;
-            padding: 10px;
-        }
-
-        .sidebar-button {
-            display: block;
-            margin-bottom: 5px;
-            text-decoration: none;
-            color: #333;
-        }
-
-        .sidebar-button:hover {
-            background-color: #ccc;
-        }
-    </style>
 {% endblock %}

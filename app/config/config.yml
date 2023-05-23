@@ -36,6 +36,8 @@ framework:
 twig:
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'
+    form_themes: ['bootstrap_4_layout.html.twig']
+
 
 # Doctrine Configuration
 doctrine:
@@ -65,14 +67,4 @@ doctrine:
                 prefix: 'AppBundle\Entity'
                 alias: AppBundle
 
-# Swiftmailer Configuration
-swiftmailer:
-    transport: '%mailer_transport%'
-    host: '%mailer_host%'
-    username: '%mailer_user%'
-    password: '%mailer_password%'
-    spool: { type: memory }
 
-sensio_framework_extra:
-    router:
-        annotations: false
